@@ -3,7 +3,7 @@ FPGA SDcard Simulator 电路
 
 为了将读卡器连接到FPGA，我画了SD形状的PCB，兼容PMOD接口，这里提供的制造文件 **gerber.zip** 可以直接用来生产PCB。
 
-| ![PMOD SDcard Simulator Board For FPGA](https://github.com/WangXuan95/FPGA-SDcard-Simulator/blob/master/hardware/front.jpg) |
+| ![PMOD SDcard Simulator Board For FPGA](https://github.com/WangXuan95/FPGA-SDcard-Simulator/blob/master/hardware/board.png) |
 | :--------: |
 | 图：SD形状的PCB |
 
