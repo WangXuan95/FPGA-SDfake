@@ -3,7 +3,7 @@ module SDFake(
     // SD-card signals, connect them to a SD-host, such as a SDcard Reader
     input  logic         sdclk,
     inout                sdcmd,
-    inout        [3:0]   sddat,
+    output logic [ 3:0]  sddat,
     // data read interface
     output logic         rdclk,
     output logic         rdreq,

@@ -1,19 +1,16 @@
-// uncomment this to enable UART debug info
-//`define DEBUG_INFO
 
+// this demo runs on Terasic DE0-Nano Board (Altera Cyclone IV)
 module top (
     // active-low, to reset the fake SD-card
+    // On DE0-Nano, it is KEY0
     input  logic        rst_n,
+    
     // these are Fake SD-card signals, connect them to a SD-host, such as a SDcard Reader
+    // On DE0-Nano, it is GPIO0
     input               sdclk,
     inout               sdcmd,
-    inout  [3:0]        sddat,
-`ifdef DEBUG_INFO
-    // clk 50MHz for UART driver (Optional)
-    input  logic        clk50m,
-    // uart interface, print debug information (Optional)
-    output logic        uart_tx,
-`endif
+    output logic [3:0]  sddat,
+
     // display SD card status on LED
     output logic [7:0]  led
 );
@@ -22,12 +19,6 @@ logic        rdclk;
 logic        rdreq;
 logic [39:0] rdaddr;
 logic [15:0] rddata;
-
-`ifdef DEBUG_INFO
-logic        dbg_clk;
-logic        dbg_wen;
-logic [39:0] dbg_wdata;
-`endif
 
 // ---------------------------------------------------------------------------------------------
 //    Fake SDcard Controller
@@ -43,12 +34,6 @@ SDFake sd_fake_inst(
     .rdreq       ( rdreq      ),
     .rdaddr      ( rdaddr     ),
     .rddata      ( rddata     ),
-    
-`ifdef DEBUG_INFO
-    .dbg_clk     ( dbg_clk    ),
-    .dbg_wen     ( dbg_wen    ),
-    .dbg_wdata   ( dbg_wdata  ),
-`endif
 
     .status_led  ( led        )  // show Fake SDcard status on LED
 );
@@ -63,27 +48,5 @@ SDContent sd_content_i(
     .rdaddr      ( rdaddr     ),
     .rddata      ( rddata     )
 );
-
-
-`ifdef DEBUG_INFO
-    // ---------------------------------------------------------------------------------------------
-    //    send debug info to UART (Optional)
-    // ---------------------------------------------------------------------------------------------
-    uarttx_saxis_async #(
-        .UART_CLK_DIV ( 434        ),
-        .DATA_WIDTH   ( 40         ),
-        .FIFO_ASIZE   ( 9          )
-    ) uarttx_saxis_async_i (
-        .rst_n        ( rst_n      ),
-        
-        .aclk         ( dbg_clk    ),
-        .tvalid       ( dbg_wen    ),
-        .tready       (            ),
-        .tdata        ( dbg_wdata  ),
-        
-        .uart_clk     ( clk50m     ),
-        .uart_tx      ( uart_tx    )
-    );
-`endif
 
 endmodule

@@ -27,5 +27,4 @@ DATE = "17:28:51  September 10, 2019"
 
 # Revisions
 
-PROJECT_REVISION = "FakeSD"
-PROJECT_REVISION = "FakeSDcard_uartmonitor"
+PROJECT_REVISION = "DE0Nano-FakeSD"
