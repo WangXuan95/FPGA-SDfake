@@ -10,9 +10,9 @@ FPGA 模拟 SD卡。
 * **兼容性强**  : 依据 **SDv2.0** 规范编写，已在 **绿联** 、 **川宇** 、**Realtek PCIe Card Reader** 等读卡器上识别。
 * **RTL实现** ：完全使用 **SystemVerilog**  , 便于移植和仿真。
 
-![Arty-Connection](https://github.com/WangXuan95/FPGA-SDcard-Simulator/blob/master/images/Arty-Connection.jpg)
-
-<center> 图：**SD卡** 与 **FPGA模拟SD卡** </center>
+| ![Arty-Connection](https://github.com/WangXuan95/FPGA-SDcard-Simulator/blob/master/images/Arty-Connection.jpg) |
+| :----------: |
+| 图：**FPGA模拟SD卡** 与 **真实的SD卡** |
 
 # 快速开始
 
