@@ -7,7 +7,7 @@ FPGA SDcard Simulator
 FPGA 模拟 SD卡。
 
 * **基本功能** ：**FPGA模仿SD卡行为** ，实现一个 **SDHCv2** 版本的 、**FAT32文件系统** 的 **只读卡** 。
-* **兼容性强**  : 依据 **SDv2.0** 规范编写，已在 **绿联** 、 **川宇** 、**Realtek PCIe Card Reader** 等读卡器上识别。
+* **兼容性强**  : 依据 **SDv2.0** 规范编写，已在 **绿联** 、 **川宇** 、 **飚王** 、**Realtek PCIe Card Reader** 等读卡器上识别。
 * **RTL实现** ：完全使用 **SystemVerilog**  , 便于移植和仿真。
 
 | ![Arty-Connection](https://github.com/WangXuan95/FPGA-SDcard-Simulator/blob/master/images/Arty-Connection.jpg) |
