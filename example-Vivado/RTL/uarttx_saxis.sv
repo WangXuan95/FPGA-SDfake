@@ -212,7 +212,6 @@ module stream_async_fifo #(
 );
 
 initial itready = 1'b0;
-initial remptyn=1'b0;
 
 logic               rreq;
 logic               remptyn = 1'b0;

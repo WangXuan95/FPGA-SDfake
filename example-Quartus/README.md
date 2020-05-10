@@ -3,15 +3,15 @@ FPGA 模拟 SD卡 示例 (基于Altera FPGA)
 
 该示例用FPGA模拟一个格式化好的SD卡(FAT32)。效果如下图：
 
-| ![Windows识别出的FPGA模拟SD卡](https://github.com/WangXuan95/FPGA-SDcard-Simulator/blob/master/images/FakeSDcardResult.png) |
+| ![Windows识别出的FPGA模拟SD卡](https://github.com/WangXuan95/Fake-SDcard/blob/master/images/FakeSDcardResult.png) |
 | :------: |
 | 图：Windows识别出的FPGA模拟SD卡 |
 
 # 硬件连接
 
-将 [SDcard Simulator 转接板](https://github.com/WangXuan95/FPGA-SDcard-Simulator/blob/master/hardware/) 插在你的Altera FPGA开发板上，注意找一个合适的位置，谨防短路。
+将 [SDcard Simulator 转接板](https://github.com/WangXuan95/Fake-SDcard/blob/master/hardware/) 插在你的Altera FPGA开发板上，注意找一个合适的位置，谨防短路。
 
-| ![Altera FPGA 连接](https://github.com/WangXuan95/FPGA-SDcard-Simulator/blob/master/images/Altera-FPGA-Connection.jpg) |
+| ![Altera FPGA 连接](https://github.com/WangXuan95/Fake-SDcard/blob/master/images/Altera-FPGA-Connection.jpg) |
 | :------: |
 | 图：笔者的 Altera FPGA 与 转接板的连接 |
 
@@ -23,6 +23,6 @@ FPGA 模拟 SD卡 示例 (基于Altera FPGA)
 
 如下图，SD卡转接板插入读卡器后，在Windows中识别出SD卡设备。
 
-| ![Altera FPGA 测试](https://github.com/WangXuan95/FPGA-SDcard-Simulator/blob/master/images/Altera-FPGA-test.jpg) |
+| ![Altera FPGA 测试](https://github.com/WangXuan95/Fake-SDcard/blob/master/images/Altera-FPGA-test.jpg) |
 | :------: |
 | 图：测试 |
