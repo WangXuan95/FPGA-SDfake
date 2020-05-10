@@ -1,3 +1,6 @@
+// a exmaple content for FAT32 filesystem
+// just an example for testing SDFake.sv
+// You may replace this module with what you want
 
 module SDContent(
     input  logic        rdclk,
