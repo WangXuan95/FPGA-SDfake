@@ -3,21 +3,21 @@ FPGA 模拟 SD卡 示例 （基于 Arty 开发板)
 
 该示例用FPGA模拟一个格式化好的SD卡(FAT32)。效果如下图：
 
-| ![Windows识别出的FPGA模拟SD卡](https://github.com/WangXuan95/Fake-SDcard/blob/master/images/FakeSDcardResult.png) |
+| ![Windows识别出的FPGA模拟SD卡](../images/FakeSDcardResult.png) |
 | :------: |
 | 图：Windows识别出的FPGA模拟SD卡 |
 
 # 硬件连接
 
-准备 [SDcard Simulator 转接板](https://github.com/WangXuan95/Fake-SDcard/blob/master/hardware/) 一个。焊接排针时，应使用 **2x6双排弯针** ，并且请 **焊接在背面**，见下图
+准备 [SDcard Simulator 转接板](../hardware/) 一个。焊接排针时，应使用 **2x6双排弯针** ，并且请 **焊接在背面**，见下图
 
-| ![排针焊接的方向](https://github.com/WangXuan95/Fake-SDcard/blob/master/images/welding.png) |
+| ![排针焊接的方向](../images/welding.png) |
 | :------: |
 | 图：排针焊接方向 |
 
 将转接板插在 Arty开发板的 JD PMOD 上，请注意方向，如下图。
 
-| ![Arty 连接](https://github.com/WangXuan95/Fake-SDcard/blob/master/images/Arty-Connection.jpg) |
+| ![Arty 连接](../images/Arty-Connection.jpg) |
 | :------: |
 | 图：Arty开发板 与 转接板 的连接示意图 |
 
@@ -29,7 +29,7 @@ FPGA 模拟 SD卡 示例 （基于 Arty 开发板)
 
 如下图，SD卡转接板插入读卡器后，会在 Windows 中识别出SD卡设备。
 
-| ![Arty 测试](https://github.com/WangXuan95/Fake-SDcard/blob/master/images/Arty-test.jpg) |
+| ![Arty 测试](../images/Arty-test.jpg) |
 | :------: |
 | 图：Arty开发板测试 |
 
