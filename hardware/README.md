@@ -3,7 +3,7 @@ FPGA SDcard Simulator 电路
 
 为了将读卡器连接到FPGA，我画了SD形状的PCB，兼容PMOD接口，这里提供的制造文件 **gerber.zip** 可以直接用来生产PCB。
 
-| ![PMOD SDcard Simulator Board For FPGA](../hardware/board.png) |
+| ![PMOD SDcard Simulator Board For FPGA](./board.png) |
 | :--------: |
 | 图：SD形状的PCB |
 
@@ -16,10 +16,10 @@ FPGA SDcard Simulator 电路
 * **排针顺序** ：2x6pin，2.54mm 间距，兼容 PMOD，PMOD是 Xilinx FPGA 开发板常用的一种接口。
 * **排针焊接** : 排针焊接时，请根据具体情况使用 **公头还是母头** 、 **直排针还是弯排针** 、以及焊接在 **正面还是反面** 。如果你使用 Arty开发板，见 [example-Vivado](../example-Vivado)
 
-| ![schematic](../hardware/schematic.png) |
+| ![schematic](./schematic.png) |
 | :--------: |
 | 图：原理图 |
 
-![PCB](../hardware/pcb.png)
+![PCB](./pcb.png)
 | :--------: |
 | 图：PCB图 |
