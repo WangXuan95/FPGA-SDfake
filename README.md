@@ -8,7 +8,7 @@ FPGA 模拟 SD卡。
 * **基本功能** ：FPGA 模拟 **SDHCv2** 版本的 **只读卡** 。
 * **兼容性**  : 依据 **SDv2.0** 规范编写，已在 **绿联** 、 **川宇** 、 **飚王** 、**Realtek PCIe Card Reader** 等读卡器上识别。
 
-| ![Arty-connection](./figures/Arty-connection.jpg) |
+| ![arty_connection](./figures/arty_connection.jpg) |
 | :-----------------------------------------------: |
 |      图：**FPGA模拟SD卡** 与 **真实的SD卡**       |
 
@@ -118,21 +118,19 @@ sd_fake 可以和一个 SD 卡读卡器的代码进行联合仿真。通过该�
 
 为了能把FPGA的引脚连接到SD读卡器，我画了一个模拟SD卡扩展板，它一端具有SD卡的形状，另一端具有 2.54mm 排针，可以连接到 FPGA 开发板的排母上。
 
-该板的设计详见目录 PCB 。里面的制造文件 gerber.zip 可以直接提供给 PCB 厂商来打样。
+| ![board](./figures/board.png) |
+| :---------------------------: |
+|      图：模拟SD卡扩展板       |
 
-| ![board](./PCB/board.png) |
+| ![schematic](./figures/schematic.png) |
+| :-----------------------------------: |
+|       图：模拟SD卡扩展板原理图        |
+
+| ![PCB](./figures/pcb.png) |
 | :-----------------------: |
-|    图：模拟SD卡扩展板     |
+|  图：模拟SD卡扩展板PCB图  |
 
-| ![schematic](./PCB/schematic.png) |
-| :-------------------------------: |
-|     图：模拟SD卡扩展板原理图      |
-
-|  ![PCB](./PCB/pcb.png)  |
-| :---------------------: |
-| 图：模拟SD卡扩展板PCB图 |
-
-PCB 制造注意事项：
+该板的制造文件 gerber.zip 可以直接提供给 PCB 厂商来打样。制造注意事项：
 
 * **板厚必须是 1.6mm** ，这与标准SD卡的厚度相近。
 * **R1电阻(10kΩ)、C1电容(1uF)** 用于产生电源电流，有些读卡器以电源电流为SD卡插入的判据。
@@ -148,7 +146,7 @@ PCB 制造注意事项：
 
 然后把它插在 Arty 开发板的 JD PMOD 上，请注意方向，如下图：
 
-| ![Arty-connection](./figures/Arty-connection.jpg) |
+| ![arty_connection](./figures/arty_connection.jpg) |
 | :-----------------------------------------------: |
 |       图：Arty开发板与模拟SD卡扩展板的连接        |
 
@@ -156,7 +154,7 @@ PCB 制造注意事项：
 
 用 Vivado 打开 example-vivado 目录里的工程,  编译并烧录。然后把 SD卡转接板插入读卡器，电脑中应该就能识别出 SD 卡。
 
-| ![Arty-test](./figures/Arty-test.jpg) |
+| ![arty_test](./figures/arty_test.jpg) |
 | :-----------------------------------: |
 |            图：插入读卡器             |
 
