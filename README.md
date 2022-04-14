@@ -1,28 +1,23 @@
 ![语言](https://img.shields.io/badge/语言-systemverilog_(IEEE1800_2005)-CAD09D.svg) ![仿真](https://img.shields.io/badge/仿真-iverilog-green.svg) ![部署](https://img.shields.io/badge/部署-quartus-blue.svg) ![部署](https://img.shields.io/badge/部署-vivado-FF1010.svg)
 
-SDFake
+中文 | [English](#en)
+
+SDfake
 ===========================
 
-FPGA 模拟 SD卡。
-
-* **基本功能** ：FPGA 模拟 **SDHCv2** 版本的 **只读卡** 。
-* **兼容性**  : 依据 **SDv2.0** 规范编写，已在 **绿联** 、 **川宇** 、 **飚王** 、**Realtek PCIe Card Reader** 等读卡器上识别。
+FPGA 模拟 **SDHCv2** 版本的只读 SD 卡，依据 **SDv2.0** 规范编写，已在 **绿联** 、 **川宇** 、 **飚王** 、**Realtek PCIe Card Reader** 等读卡器上识别。
 
 | ![arty_connection](./figures/arty_connection.jpg) |
 | :-----------------------------------------------: |
 |      图：**FPGA模拟SD卡** 与 **真实的SD卡**       |
 
-
-
 # 背景知识
 
-请先阅读《SD卡背景知识.docx》
-
-
+请阅读 [SDcard.md](./SDcard.md)
 
 # 设计代码
 
-RTL 目录中的 **sd_fake.sv** 就是模拟 SD 卡的设计代码（可综合），它能让 FPGA 模仿 SD 卡的行为，SD-host 会将他视为一张普通的 SD 只读卡。
+[RTL](./RTL) 目录中的 **sd_fake.sv** 就是模拟 SD 卡的设计代码（可综合），它能让 FPGA 模仿 SD 卡的行为，SD-host 会将他视为一张普通的 SD 只读卡。
 
 | ![diagram](./figures/diagram.png) |
 | :-------------------------------: |
@@ -98,13 +93,9 @@ rdaddr 信号具有提前机制，即 rdaddr 出现有效地址比 rdreq 的上�
 
 另外 show_sdcmd_en 、show_sdcmd_cmd 、show_sdcmd_arg 这三个信号用来展示 sdcmd 上的命令字，一般用不到，忽略即可。
 
-
-
 # 仿真
 
 sd_fake 可以和一个 SD 卡读卡器的代码进行联合仿真。通过该仿真，你可以看到读卡器读取SD卡时SD总线上的完整波形。仿真工程详见： [WangXuan95/FPGA-SDcard-Reader](https://github.com/WangXuan95/FPGA-SDcard-Reader) 
-
-
 
 # 运行示例工程
 
@@ -116,7 +107,7 @@ sd_fake 可以和一个 SD 卡读卡器的代码进行联合仿真。通过该�
 
 ## 模拟SD卡扩展板
 
-为了能把FPGA的引脚连接到SD读卡器，我画了一个模拟SD卡扩展板，它一端具有SD卡的形状，另一端具有 2.54mm 排针，可以连接到 FPGA 开发板的排母上。
+为了能把FPGA的引脚连接到SD读卡器的卡槽上，我画了一个模拟SD卡扩展板，它一端具有SD卡的形状，另一端具有 2.54mm 排针，可以连接到 FPGA 开发板的排母上。
 
 | ![board](./figures/board.png) |
 | :---------------------------: |
@@ -138,7 +129,7 @@ sd_fake 可以和一个 SD 卡读卡器的代码进行联合仿真。通过该�
 * **SDVCC电源** 由读卡器提供， **不要用来给 FPGA 开发板供电** ， FPGA 应该使用开发板自身的电源。
 * 可以使用沉金工艺来让 SD 卡的金手指插拔次数更多。也可以不用沉金工艺，但插拔寿命就可能只有十几次，然后就会接触不良，这一点需要注意。
 
-因为我们用的是 Arty 开发板，在焊接排针时，应使用 **2x6双排弯针** ，并且焊接在背面，如下图：
+因为我们用的是 [Arty开发板](http://digilent.com.cn/products/product-arty-board-artix-7-fpga-development-board-for-makers-and-hobbyists.html) ，在焊接排针时，应使用 **2x6双排弯针** ，并且焊接在背面，如下图：
 
 | ![welding](./figures/welding.png) |
 | :-------------------------------: |
@@ -152,11 +143,15 @@ sd_fake 可以和一个 SD 卡读卡器的代码进行联合仿真。通过该�
 
 ## 下载 FPGA 并测试
 
-用 Vivado 打开 example-vivado 目录里的工程,  编译并烧录。然后把 SD卡转接板插入读卡器，电脑中应该就能识别出 SD 卡。
+用 Vivado 打开 [example-vivado](./example-vivado) 目录里的工程,  编译并烧录。然后把 SD卡转接板插入读卡器，电脑中应该就能识别出 SD 卡。
 
 | ![arty_test](./figures/arty_test.jpg) |
 | :-----------------------------------: |
 |            图：插入读卡器             |
+
+## 修改 SD 卡内容
+
+本库模拟的是一张只读的 SD 卡，因此你不能直接在电脑识别出的 SD 卡中修改它。要修改文件内容，只能重新制作 SD 卡镜像，并放在 FPGA 的 Verilog 代码描述的存储器中。
 
 注意到工程的顶层代码 top.sv 中除了部署了一个 sd_fake 外，还用一个很大的 always 块实现了一个 ROM （实现了存储SD卡数据的存储器）：
 
@@ -173,13 +168,185 @@ always @ (posedge sdclk)
         endcase
 ```
 
-ROM 中的数据就来自于一张真实的SD卡的全盘导出，导出方法详见《SD卡背景知识.docx》。
+ROM 中的数据就来自于一张真实的SD卡的全盘导出，导出方法详见 [SDcard.md](./SDcard.md) 
 
-我导出的 .hex 镜像文件用 Winhex 打开后，可以看到如下图的数据，以上 ROM 代码就是根据这些数据编写的。
-
-比如，下图中的 00 82 对应的地址是 0x000001BE ，存储器接口的编址规则，得到存储器接口中的地址是 0x1BE/2 = 0x0DF ，因此得到一行 Verilog 代码： `40'h00000000df: rom_data <= 16'h8200;` （注意因为是小端序，所以是 16'h8200 而不是 16'h0082 ）
+我导出的 .hex 镜像文件用 Winhex 打开后，可以看到如下图的数据，以上 ROM 代码就是根据这些数据编写的。比如，下图中的 `00 82` 对应的地址是 `0x000001BE` ，存储器接口的编址规则，得到存储器接口中的地址是 `0x1BE/2 = 0x0DF` ，因此得到一行 Verilog 代码： `40'h00000000df: rom_data <= 16'h8200;` （注意因为是小端序，所以是 16'h8200 而不是 16'h0082 ）
 
 |          ![hexfile](./figures/hexfile.png)          |
 | :-------------------------------------------------: |
 | 图：用 Winhex 查看 SD卡全盘导出得到的 .hex 镜像文件 |
+
+
+
+
+
+<span id="en">SDfake</span>
+===========================
+
+Imitate a read-only SDHCv2 SDcard using FPGAs. It is written according to SDv2.0 specification and has been recognized on SDcard adaptors such as Ugreen, Kawau, SSK, and Realtek PCIe Card Reader.
+
+| ![arty_connection](./figures/arty_connection.jpg) |
+| :-----------------------------------------------: |
+|   Figure: FPGA imitated SDcard vs. real SDcard.   |
+
+# Background
+
+See [SDcard.md](./SDcard.md)
+
+# Design Code
+
+Design file **sd_fake.sv** is in [RTL](./RTL) directory, which is synthesizable. It allows the FPGA to imitate the behavior of an SDcard, and the SD-host will treat it as a normal read-only SDcard.
+
+|  ![diagram](./figures/diagram.png)  |
+| :---------------------------------: |
+| Figure：sd_fake.sv working diagram. |
+
+The figure above is the system diagram when sd_fake is working, the SD-host (blue box) on the left is the SD-host (often an SDcard adaptor or an embedded microprocessor). The SD-host has a SDcard slot and is connected to the SDfake via the 6-wire SD bus.
+
+The SDfake (red box) and the storage (green box) forms a imitated SDcard together. Among them, the storage only provides SDcard's data, the SDfake is to parse and respond the SD bus commands, and when SD-host requests data, the SDfake will read data from the storage and transmit it to the SD-host.
+
+The interface between the SDfake and the storage is a minimalist interface of "given address and get data". Therefore, you can use random access memory to realize the storage, such as on-chip RAM/ROM in FPGA.
+
+The following table describes the module interface of the sdfake.sv (omitting some status display signals that are not necessary).
+
+|       Type        |        Name        | Direction | Bit Width | Discription                                                  |
+| :---------------: | :----------------: | :-------: | :-------: | ------------------------------------------------------------ |
+|       reset       |    `rst_async`     |   input   |     1     | Asynchronous reset of the entire SDfake.                     |
+|      SD bus       |      `sdclk`       |   input   |     1     | Connect to SD-host.                                          |
+|      SD bus       |      `sdcmd`       |   inout   |     1     | Connect to SD-host.                                          |
+|      SD bus       |      `sddat`       |  output   |     4     | Connect to SD-host.                                          |
+| Storage interface |      `rdreq`       |  output   |     1     | Connect to the storage, rdreq=1indicates that the storage needs to be read. |
+| Storage interface |      `rdaddr`      |  output   |    40     | Connect to the storage, give address.                        |
+| Storage interface |      `rddata`      |   input   |    16     | Connect to the storage, get data.                            |
+|    Show status    | `show_status_bits` |  output   |     8     | Show SDcard status (unnecessary).                            |
+
+## Reset signal
+
+`rst_async` is an asynchronous reset signal. When the FPGA starts to work, let `rst_async=0` to reset the module, and then let `rst_async=1` to release the reset.
+
+## SD bus signal
+
+SD bus signals include `sdclk`, `sdcmd` and `sddat`, which should be directly led to the FPGA pins and connected to SD-host.
+
+> Note: According to the SD protocol, the `sddat` signal is inout, but in sd_fake.sv it is output. This is because sd_fake implements an read-only SDcard, which only drives `sddat` but never read it.
+
+## Storage interface signal
+
+When SD-host requests data, the sd_fake module fetches data through the storage interface. The wave of storage interaface is shown in the figure below. These signals are synchronized to the clock `sdclk`. `rdreq` is the read enable signal. At the rising edge of `sdclk`, if `rdreq` has a high-level pulse, the storage data need to be read out to the `rddata` signal. Then `rddata` needs to remain unchanged until the next `rdreq` high pulse.
+
+| ![mem_interface_wave](./figures/mem_interface_wave.png) |
+| :-----------------------------------------------------: |
+|             Figure: The storage interface.              |
+
+`rdaddr` signal has an earliness mechanism, that is, the valid address on `rdaddr` appears several cycles ahead of the rising edge of `rdreq`, and will remain valid until the falling edge of `rdreq`. There are two situations:
+
+- When `rdaddr` switches to a new 512B sector, `rdaddr` will be valid 8 clock cycles earlier than the rising edge of `rdreq`. As shown as `addr0` in the figure above.
+- When the address on `rdaddr` belongs to the same sector as the previous address, `rdaddr` will be valid 1 clock cycle earlier than the rising edge of `rdreq`. As shown as `addr1`, `addr2`, `addr3` in the figure above.
+
+The reason why I provide the earliness mechanism of `rdaddr` is to give enough time to fetch data from the storage, if the storage is a FPGA off-chip storage, such as a NOR-Flash.
+
+## Storage interface addressing
+
+The data signal (`rddata`) of the storage interface is 16 bits wide, so it is addressed in double-byte. But according to the SDcard specification, the data in the SDcard is addressed in bytes. The conversion method is: a double-byte is divided into two bytes in little-endian, as shown in the figure below.
+
+|              ![address](./figures/address.png)               |
+| :----------------------------------------------------------: |
+| Figure: SDcard addressing vs. the storage interface addressing of sd_fake. |
+
+In double-byte addressing, the address (`rdaddr`) of the storage interface is 40bit wide, which means that the storage interface has an addressing space of 2*2^40=2TiB, and the address range is 0x0000000000\~0xFFFFFFFFFF . However, we obviously won't deploy such a large space (general SDcards are not so large), we need to use the low address of this 2TiB. For example, if only the first 64KiB of the SDcard image is valid (the data bytes after 64KiB may all be 0x00 or 0xFF, which are all invalid or unused space), then we only need to store the data in the FPGA. Deploy a 64KiB ROM (width=2Byte, depth=32768), which takes a address range 0x0000000000\~0x0000007FFF.
+
+## Show status
+
+The signal `show_status_bits` shows the status of sd_fake, which can be connected to a 8bit LED (not necessary). The following table shows the meaning of each bit.
+
+| Bit位                 | 含义                                                         |
+| --------------------- | ------------------------------------------------------------ |
+| show_status_bits[7]   | 0: responsing command     1: idle                            |
+| show_status_bits[6]   | 0: `sddat` in 1-bit mode     1: `sddat` in 4-bit mode        |
+| show_status_bits[5]   | 0: before soft-reset command     1: after soft-reset command |
+| show_status_bits[4]   | 0: responsing ACMD     1: not responsing ACMD                |
+| show_status_bits[3:0] | FSM of sd_fake                                               |
+
+# RTL Simulation
+
+sd_fake can co-simulate with an Verilog SDcard reader. With this simulation, you can see the complete waveform on the SD bus when the SDcard reader reads the SDcard. See the project: [WangXuan95/FPGA-SDcard-Reader](https://github.com/WangXuan95/FPGA-SDcard-Reader)
+
+# Run example on FPGA
+
+This repository provides an example project based on [Arty development board](http://digilent.com.cn/products/product-arty-board-artix-7-fpga-development-board-for-makers-and-hobbyists.html) , which imitate an SDcard with FAT32 file system. When you plug it into the computer through a SDcard adaptor, it can recognize the SDcard and read the file inside.
+
+|               ![result](./figures/result.png)                |
+| :----------------------------------------------------------: |
+| Figure：Windows successfully recognize the FPGA imitated SDcard. |
+
+## SDcard expansion board
+
+In order to connect the FPGA pins to the SDcard slot, I drew an PCB in SDcard's shape, which has a 2.54mm pin header on the other end. It can be connected to the pin header on the FPGA development board.
+
+|  ![board](./figures/board.png)  |
+| :-----------------------------: |
+| Figure: SDcard expansion board. |
+
+|    ![schematic](./figures/schematic.png)    |
+| :-----------------------------------------: |
+| Figure: Schmatic of SDcard expansion board. |
+
+|           ![PCB](./figures/pcb.png)           |
+| :-------------------------------------------: |
+| Figure: PCB design of SDcard expansion board. |
+
+Its manufacturing file [gerber.zip](./gerber.zip) can be directly provided to PCB manufacturers for proofing. Note that:
+
+* The board thickness must be 1.6mm, which is similar to the thickness of a standard SDcard.
+* R1 resistor (10kΩ), C1 capacitor (1uF) are used to generate power supply current. Some SDcard adaptors use power supply current to detect SDcard insertion.
+* R2 resistor (47kΩ) is necessary because DAT3 signal also has SD card insertion pull-up detection function.
+* SDVCC power supply is provided by the SDcard adaptor, and should not be used to power the FPGA development board. The FPGA should use its own power supply.
+* You can use the immersion gold process to make the SDcard's gold fingers more frequently inserted and removed. It is also allowed to not use the immersion gold process, but the plugging life may only be a dozen times.
+
+For Arty development board, when we solder the pin headers, we should use **2x6 double-row bent pins** and solder them on the back, as shown below:
+
+| ![soldering](./figures/soldering.png) |
+| :-----------------------------------: |
+|  Figure: Header soldering direction.  |
+
+Then plug it into the **JD** PMOD on Arty board, the direction is shown below:
+
+|   ![arty_connection](./figures/arty_connection.jpg)   |
+| :---------------------------------------------------: |
+| Figure: Connect SDcard expansion board to Arty board. |
+
+## Program the FPGA
+
+Using Vivado to open the project in the [example-vivado](./example-vivado) directory, compile and program it. Then insert it into an SDcard adaptor. Then the SDcard should be recognized by the computer.
+
+|            ![arty_test](./figures/arty_test.jpg)             |
+| :----------------------------------------------------------: |
+| Figure: Connect FPGA imitated SDcard to computer through an SDcard adaptor. |
+
+## Modify SDcard content
+
+This repository imitates a read-only SDcard, so you cannot modify the files directly in the SDcard recognized by the computer. To modify the files, the only way is to recreate an SDcard image and place it in the ROM described by Verilog code of the FPGA.
+
+Note that in the project's top-level code top.sv, besides the sd_fake module, there is a large always block which implements an ROM which stores SDcard data:
+
+```verilog
+always @ (posedge sdclk)
+    if(rom_req)
+        case(rom_addr)
+        40'h00000000df: rom_data <= 16'h8200;
+        40'h00000000e0: rom_data <= 16'h0003;
+        40'h00000000e1: rom_data <= 16'hd50b;
+        40'h00000000e2: rom_data <= 16'hade8;
+        // omit 390 lines ... //
+        default:        rom_data <= 16'h0000;
+        endcase
+```
+
+The data in this ROM comes from a full-disk dump from a real SDcard. For the tutorial, see [SDcard.md](./SDcard.md).
+
+Open the .hex image file that we dumped, you can see the data as shown below. The above ROM code is written according to these data. For example, the address corresponding to `00 82` in the figure below is `0x000001BE` . According to the addressing rules of the storage interface, the address in the storage interface is `0x1BE/2 = 0x0DF `, so we can get a line of Verilog code: `40'h00000000df: rom_data<=16' h8200;` (note that it is `16'h8200` instead of `16'h0082` because of the little endian).
+
+|              ![hexfile](./figures/hexfile.png)               |
+| :----------------------------------------------------------: |
+| Figure: Using Winhex to view the .hex image file that we dumped. |
 
