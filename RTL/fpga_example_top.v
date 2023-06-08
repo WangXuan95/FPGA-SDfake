@@ -1,12 +1,12 @@
 
 //--------------------------------------------------------------------------------------------------------
-// Module  : fpga_top
+// Module  : fpga_example_top
 // Type    : synthesizable, FPGA's top, IP's example design
-// Standard: SystemVerilog 2005 (IEEE1800-2005)
+// Standard: Verilog 2001 (IEEE1364-2001)
 // Function: an example of sd_fake, imitate a SD-card using Arty board
 //--------------------------------------------------------------------------------------------------------
 
-module fpga_top (
+module fpga_example_top (
     // active-low, to reset sd_fake
     input  wire        rstn,
     
